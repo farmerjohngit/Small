@@ -36,18 +36,7 @@ class LibraryPlugin extends AppPlugin {
         if (!released) return
 
         // Change android plugin from `lib' to `application' dynamically
-        // FIXME: Any better way without edit file?
-
-        if (mBakBuildFile.exists()) {
-            // With `tidyUp', should not reach here
-            throw new Exception("Conflict buildFile, please delete file $mBakBuildFile or " +
-                    "${project.buildFile}")
-        }
-
-        def text = project.buildFile.text.replaceAll(
-                'com\\.android\\.library', 'com.android.application')
-        project.buildFile.renameTo(mBakBuildFile)
-        project.buildFile.write(text)
+        project.plugins.apply(com.android.build.gradle.AppPlugin)
     }
 
     @Override
